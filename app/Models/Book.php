@@ -12,6 +12,8 @@ class Book extends Model
 	use HasDateTimeFormatter;
     use SoftDeletes;
 
+    protected $guarded = ['id'];
+
     public function getAuthorAttribute($value)
     {
         return explode(',', $value);

@@ -15,20 +15,28 @@
                     <h1>{{ $page->title }}</h1>
                     <div class="infos">
                         <a href="/wiki/the-rails-doctrine/comments">
-                            18 条评论
+                            {{ $page->comment_count }} 条评论 {{ $page->getClassName() }}
                         </a>,
-                        54 次修正，43572 次阅读， 最後更新於 <abbr class="timeago" title="2018年05月28日">{{ $page->updated_at }}</abbr>
+                        {{ $page->edit_count }} 次修正，{{ $page->view_count }} 次阅读， 最后更新于 <abbr class="timeago"
+                                                                                             title="2018年05月28日">{{ $page->updated_at }}</abbr>
                     </div>
                 </div>
 
 
                 <div class="card-body markdown">
                     <article>
-                        <editor-preview content="{{ $page->content }}"></editor-preview>
+                        <editor-preview content="{{ $page->desc ? '> ' . $page->desc ."\r\n\r\n".$page->content : $page->content }}"></editor-preview>
                     </article>
                 </div>
 
                 <div class="card-footer editors clearfix">
+                    <comment object-type="{{ $page->getClassName() }}" :object-id="{{ $page->id }}"></comment>
+
+                    <div>
+                        @foreach($comments as $comment)
+                        <p>{{ $comment->title }}</p>
+                        @endforeach
+                    </div>
                     <div class="heading">
                         本頁貢獻者:
                         <span class="pull-right"><div class="social-share-button"

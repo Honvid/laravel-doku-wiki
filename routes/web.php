@@ -25,6 +25,7 @@ Route::group([
     $router->resource('/books', 'BookController');
     $router->resource('/pages', 'PageController');
     $router->resource('/authors', 'AuthorController');
+    $router->resource('/comments', 'CommentController');
 });
 
 Auth::routes();

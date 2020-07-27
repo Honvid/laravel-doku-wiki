@@ -67,7 +67,7 @@ class PageController extends AdminController
                 $row->width(4)->select('parent')
                     ->options(Page::all()->pluck('title', 'id'))->default(0);
                 $row->width(4)->text('author');
-                $row->width(12)->markdown('desc');
+                $row->width(12)->textarea('desc');
                 $row->width(12)->markdown('content')->required();
                 $row->width(4)->number('order');
                 $row->width(4)->display('created_at');

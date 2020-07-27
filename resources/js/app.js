@@ -23,6 +23,7 @@ window.Vue = require('vue');
 
 Vue.component('editor-preview', require('./components/editor/EditorPreview.vue').default);
 Vue.component('blacklist', require('./components/Blacklist.vue').default);
+Vue.component('comment', require('./components/Comment.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
