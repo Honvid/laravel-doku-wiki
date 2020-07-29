@@ -38,7 +38,7 @@
                 <div class="card-body markdown">
                     <article>
                         <h1>简介</h1>
-                        <editor-preview content="{{ $book->desc }}"></editor-preview>
+                        <editor-preview id="{{ 'book-' . $book->id }}" content="{{ $book->desc }}" :toc="false"></editor-preview>
                         <h1 style="margin-top: 1.2em" id="目录">目录</h1>
                         <ol class="sorted_table tree " data-chapterid="0" data-filetype="chapter">
                             @foreach($pages as $page)

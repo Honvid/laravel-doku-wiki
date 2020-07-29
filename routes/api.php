@@ -23,6 +23,7 @@ Route::group([
     'namespace'     => 'Web',
 ], function (Router $router) {
     $router->get('/books/{book}/blacklist', 'BookController@blacklist');
+    $router->get('/pages/{page}/comments', 'PageController@comments');
     //$router->resource('/pages', 'PageController');
     //$router->resource('/authors', 'AuthorController');
 });

@@ -25,18 +25,13 @@
 
                 <div class="card-body markdown">
                     <article>
-                        <editor-preview content="{{ $page->desc ? '> ' . $page->desc ."\r\n\r\n".$page->content : $page->content }}"></editor-preview>
+                        <editor-preview :toc="true"
+                                        id="{{ 'page-' . $page->id }}"
+                                        content="{{ $page->desc ? '> ' . $page->desc ."\r\n\r\n".$page->content : $page->content }}"></editor-preview>
                     </article>
                 </div>
 
                 <div class="card-footer editors clearfix">
-                    <comment object-type="{{ $page->getClassName() }}" :object-id="{{ $page->id }}"></comment>
-
-                    <div>
-                        @foreach($comments as $comment)
-                        <p>{{ $comment->title }}</p>
-                        @endforeach
-                    </div>
                     <div class="heading">
                         本頁貢獻者:
                         <span class="pull-right"><div class="social-share-button"
@@ -73,6 +68,8 @@
                     </div>
                 </div>
             </div>
+
+            <comment type="pages" :id="{{ $page->id }}"></comment>
         </div>
     </div>
 @endsection

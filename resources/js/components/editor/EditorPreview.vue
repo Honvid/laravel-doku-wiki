@@ -1,6 +1,6 @@
 <template>
     <div class="editor-preview-container">
-        <div id="editor-preview-box" class="editor-preview"></div>
+        <div :id="'editor-preview-box-'+this.id" class="editor-preview"></div>
     </div>
 </template>
 
@@ -11,6 +11,16 @@
   export default {
     name: 'editor-preview',
     props: {
+      id: {
+        type: String,
+        required: true,
+        default: ''
+      },
+      toc: {
+        type: Boolean,
+        required: false,
+        default: false
+      },
       content: {
         type: String,
         required: true,
@@ -20,16 +30,17 @@
     created() {
     },
     mounted() {
-      this.vditor = Vditor.preview(document.querySelector('#editor-preview-box'), this.content, {
+      let that = this;
+      this.vditor = Vditor.preview(document.querySelector('#editor-preview-box-' + this.id), this.content, {
         speech: {
           enable: true,
         },
         anchor: 1,
-        after() {
+        after: () => {
           if (window.innerWidth <= 768) {
             return
           }
-          if (document.querySelector('#toc-container')) {
+          if (this.toc && document.querySelector('#toc-container')) {
             tocbot.init({
               tocSelector: '#toc-container',
               contentSelector: '.markdown',

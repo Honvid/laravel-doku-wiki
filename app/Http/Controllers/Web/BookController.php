@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
+use App\Models\Comment;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Http\Request;
 
@@ -99,5 +100,12 @@ class BookController extends Controller
         $pages = $book->pages()->get()->toArray();
         $pages = Helper::buildNestedArray($pages);
         return response($pages);
+    }
+
+    public function comments(Book $book)
+    {
+        $comments = Comment::query()->where('object_id', $book->id)
+            ->where('object_type', $book->getClassName())->get();
+        return response($comments);
     }
 }

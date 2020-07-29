@@ -87,4 +87,11 @@ class PageController extends Controller
     {
         //
     }
+
+    public function comments(Page $page)
+    {
+        $comments = Comment::with('user')->where('object_id', $page->id)
+            ->where('object_type', $page->getClassName())->get();
+        return response($comments);
+    }
 }

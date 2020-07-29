@@ -12,7 +12,6 @@ class Comment extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'title',
         'content',
         'object_id',
         'object_type',
@@ -20,4 +19,9 @@ class Comment extends Model
         'user_id',
         'status'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
