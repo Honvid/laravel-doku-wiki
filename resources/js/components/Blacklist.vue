@@ -1,81 +1,54 @@
 <template>
-    <div class="backlist-sidebar hide-ios">
-        <div class="card">
-            <div class="card-body">
-                <h3>目录</h3>
-                <ul class="backlist">
-                    <li class="chapter-item" v-bind:data-id="item.id"
-                        v-for="item in blacklist"
-                        @mouseover="collapse(item.id, false)"
-                        @mouseout="collapse(item.id, true)"
-                        v-bind:class="{ active: item.id === current || active}">
-                        <a href="/pages/1"><i class="fa fa-caret-right"></i> {{ item.title }}</a>
-                        <ol v-if="item.children">
-                            <li class="page-item"
-                                v-for="child in item.children"
-                                v-bind:data-id="child.id">
-                                <a href="#"><i class="fa fa-file-text"></i> {{ child.title }}</a>
-                            </li>
-                        </ol>
+    <div class="book-blacklist">
+        <h1>目录</h1>
+        <ul class="list-group list-group-flush">
+            <li v-for="blacklist in blacklists" :key="blacklists.id" class="list-group-item">
+                <router-link :to="{ name: 'libraries.pages-view', params: { id: blacklist.id} }">
+                    {{ blacklist.title }}
+                </router-link>
+                <ol v-if="blacklist.children">
+                    <li class="page-item"
+                        v-for="child in blacklist.children"
+                        v-bind:data-id="child.id">
+                        <router-link :to="{ name: 'libraries.pages-view', params: { id: child.id} }"> {{ child.title }}</router-link>
                     </li>
-                </ul>
-            </div>
-        </div>
+                </ol>
+            </li>
+        </ul>
     </div>
 </template>
 
 <script>
-  import axios from 'axios';
+  import {getBookBlacklist} from '~/apis/libraries'
 
   export default {
-    name: 'blacklist',
+    name: 'Blacklist',
+
     data() {
       return {
-        blacklist: [],
-        current: 0,
-        active: false
+        blacklists: []
       }
     },
+
     props: {
-      book: {
+      id: {
         type: Number,
-        required: true
-      },
-      page: {
-        type: Number,
-        required: true
+        required: true,
       }
     },
-    created() {
-    },
-    methods: {
-      collapse(id, isCollapse) {
-        let items = document.querySelectorAll('.backlist .chapter-item');
-        items.forEach((item) => {
-          let currentId = parseInt(item.getAttribute('data-id'));
-          item.classList.toggle('active', (currentId === this.current && isCollapse) || (currentId === id))
-        })
-      }
-    },
+
     mounted() {
-      axios.get('/api/books/' + this.book + '/blacklist')
-        .then((response) => {
-          for (let item of response.data) {
-            if (item.id === this.page) {
-              this.current = item.id;
-              break;
-            }
-            if (item.children) {
-              for (let child of item.children) {
-                if (child.id === this.page) {
-                  this.current = item.id;
-                  break;
-                }
-              }
-            }
-          }
-          this.blacklist = response.data
-        })
+      getBookBlacklist(this.id).then(response => {
+        this.blacklists = response.data;
+      }).catch(error => {
+        console.log(error)
+      }).finally(() => {
+      });
     }
   }
 </script>
+<style>
+    .recommend-books .card-body {
+        padding: 0;
+    }
+</style>

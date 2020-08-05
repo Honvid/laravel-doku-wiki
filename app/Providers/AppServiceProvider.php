@@ -2,26 +2,11 @@
 
 namespace App\Providers;
 
-use App\Models\Author;
-use App\Models\Book;
-use App\Models\Page;
-use App\Observers\AuthorObserver;
-use App\Observers\BookObserver;
-use App\Observers\PageObserver;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
-    }
-
     /**
      * Bootstrap any application services.
      *
@@ -29,8 +14,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Book::observe(BookObserver::class);
-        Author::observe(AuthorObserver::class);
-        Page::observe(PageObserver::class);
+        if ($this->app->runningUnitTests()) {
+            Schema::defaultStringLength(191);
+        }
+    }
+
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        if ($this->app->environment('local', 'testing')) {
+        }
     }
 }

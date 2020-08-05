@@ -1,26 +1,8 @@
-// Fonts
-//@import url('https://fonts.googleapis.com/css?family=Nunito');
-
-// Variables
 @import 'variables';
-
-//font-awesome
-@import "~@fortawesome/fontawesome-free/scss/fontawesome";
-@import "~@fortawesome/fontawesome-free/scss/brands.scss";
-@import "~@fortawesome/fontawesome-free/scss/regular.scss";
-@import "~@fortawesome/fontawesome-free/scss/solid.scss";
-@import "~@fortawesome/fontawesome-free/scss/v4-shims.scss";
-
-// Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import '~sweetalert2/src/sweetalert2';
 
-@import "utils";
-
-@import "header";
-@import "markdown";
-
-@import "reply";
-@import "topic";
-
-//@import "siderbar";
-@import "book";
+@import 'elements/card';
+@import 'elements/navbar';
+@import 'elements/buttons';
+@import 'elements/transitions';

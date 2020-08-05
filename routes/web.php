@@ -15,19 +15,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('book.book');
-});
-
-Route::group([
-    'namespace'     => 'Web',
-], function (Router $router) {
-    $router->resource('/books', 'BookController');
-    $router->resource('/pages', 'PageController');
-    $router->resource('/authors', 'AuthorController');
-    $router->resource('/comments', 'CommentController');
-});
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/', function () {
+//    return view('book.book');
+//});
+//
+//Route::group([
+//    'namespace'     => 'Web',
+//], function (Router $router) {
+//    $router->resource('/books', 'BookController');
+//    $router->resource('/pages', 'PageController');
+//    $router->resource('/authors', 'AuthorController');
+//    $router->resource('/comments', 'CommentController');
+//});
+//
+//Auth::routes();
+//
+//Route::get('/home', 'HomeController@index')->name('home');
