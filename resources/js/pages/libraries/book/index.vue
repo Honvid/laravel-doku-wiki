@@ -6,7 +6,7 @@
 
         <div class="col-md-9">
             <transition name="fade" mode="out-in">
-                <card :title="$t('books')" class="books-card">
+                <card :title="$t('books')" :has-footer="true" class="books-card">
                     <div class="row">
                         <div v-for="book in books" class="col-sm-6 col-md-3">
                             <router-link :to="{ name: 'libraries.books-view', params: {id: book.id} }">
@@ -20,6 +20,9 @@
                             </router-link>
                         </div>
                     </div>
+                    <template v-slot:footer>
+                        <paginate :page-count="20" :click-handler="clickCallback" :first-last-button="true"></paginate>
+                    </template>
                 </card>
             </transition>
         </div>
@@ -29,10 +32,11 @@
 <script>
   import {mapGetters} from 'vuex'
   import {getBooks} from '~/apis/libraries'
+  import Paginate from "~/components/Paginate.vue";
   import RecommendBooks from "~/components/RecommendBooks.vue";
 
   export default {
-    components: {RecommendBooks},
+    components: {RecommendBooks, Paginate},
     middleware: 'auth',
     scrollToTop: true,
 
@@ -59,6 +63,12 @@
         console.log(error)
       }).finally(() => {
       });
+    },
+
+    methods: {
+      clickCallback (pageNum) {
+        console.log(pageNum)
+      }
     }
   }
 </script>

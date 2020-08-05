@@ -7,6 +7,7 @@ import RecommendBooks from './RecommendBooks'
 import MarkdownRender from './MarkdownRender'
 import Blacklist from './Blacklist'
 import TocSidebar from './TocSidebar'
+import Paginate from './Paginate'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
 // Components that are registered globaly.
@@ -22,6 +23,7 @@ import { HasError, AlertError, AlertSuccess } from 'vform'
   MarkdownRender,
   Blacklist,
   TocSidebar,
+  Paginate,
 ].forEach(Component => {
   Vue.component(Component.name, Component)
 })

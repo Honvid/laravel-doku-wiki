@@ -1,26 +1,22 @@
 <template>
-    <div class="card recommend-books">
-        <div class="card-header">
-            {{ $t('recommend_books') }}
-        </div>
-
-        <div class="card-body">
-            <ul class="list-group list-group-flush">
-                <li v-for="book in books" :key="book.id" class="list-group-item">
-                    <router-link :to="{ name: 'libraries.books-view', params: {id: book.id} }">
-                        <i class="fa fa-book"></i>
-                        {{ book.name }}
-                    </router-link>
-                </li>
-            </ul>
-        </div>
-    </div>
+    <card class="recommend-books" :title="$t('recommend_books')">
+        <ul class="recommend-book-list">
+            <li v-for="book in books" :key="book.id" class="recommend-book-item">
+                <router-link :to="{ name: 'libraries.books-view', params: {id: book.id} }" class="text-decoration-none">
+                    <font-awesome-icon icon="book" fixed-width />
+                    {{ book.name }}
+                </router-link>
+            </li>
+        </ul>
+    </card>
 </template>
 
 <script>
   import {getRecommendBooks} from '~/apis/libraries'
+  import Card from "./Card.vue";
 
   export default {
+    components: {Card},
     name: 'RecommendBooks',
 
     data() {
@@ -39,8 +35,20 @@
     }
   }
 </script>
-<style>
-    .recommend-books .card-body {
-        padding: 0;
+<style lang="scss">
+    .recommend-books {
+        .card-body {
+            padding: 0;
+            .recommend-book-list{
+                margin: 0;
+                list-style: none;
+                padding: .5rem 1rem;
+                .recommend-book-item{
+                    margin: .2rem;
+                    list-style: none;
+                    line-height: 1.5rem;
+                }
+            }
+        }
     }
 </style>

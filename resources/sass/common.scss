@@ -1,0 +1,11 @@
+@import "variables";
+
+a{
+  color: $a-color !important;
+  &:hover, &:visited, &:active, &:focus{
+    color: $a-active !important;
+  }
+  &.active{
+    color: $a-active !important;
+  }
+}

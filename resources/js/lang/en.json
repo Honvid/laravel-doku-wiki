@@ -39,5 +39,10 @@
 
   "libraries": "Libraries",
   "recommend_books": "Recommend Books",
-  "books": "Books"
+  "books": "Books",
+
+  "previous": "&laquo; Previous",
+  "next": "Next &raquo;",
+  "first_page": "First",
+  "last_page": "Last"
 }

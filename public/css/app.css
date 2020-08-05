@@ -12622,3 +12622,18 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
   opacity: 0;
 }
 
+a {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+a:hover,
+a:visited,
+a:active,
+a:focus {
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
+a.active {
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
