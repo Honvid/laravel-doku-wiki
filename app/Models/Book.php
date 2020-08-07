@@ -14,25 +14,22 @@ class Book extends Model
     use SoftDeletes;
     use ClassNameTrait;
 
+    protected $perPage = 1;
+
     protected $guarded = ['id'];
-
-    public function getAuthorAttribute($value)
-    {
-        return explode(',', $value);
-    }
-
-    public function setAuthorAttribute($value)
-    {
-        $this->attributes['author'] = join(',', $value);
-    }
-
-    public function getAuthorsAttribute($value)
-    {
-        return $value;
-    }
 
     public function pages()
     {
         return $this->hasMany(Page::class);
+    }
+
+    public function authors()
+    {
+        return $this->belongsToMany(Author::class, 'book_authors');
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'book_categories');
     }
 }

@@ -11,8 +11,8 @@ class Author extends Model
     use HasDateTimeFormatter;
     use SoftDeletes;
 
-    public function book()
+    public function books()
     {
-        return $this->hasMany(Book::class, 'author');
+        return $this->belongsToMany(Book::class, 'book_authors');
     }
 }

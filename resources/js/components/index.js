@@ -8,22 +8,24 @@ import MarkdownRender from './MarkdownRender'
 import Blacklist from './Blacklist'
 import TocSidebar from './TocSidebar'
 import Paginate from './Paginate'
+import CategorySelecter from './CategorySelecter'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
 // Components that are registered globaly.
 [
-  Card,
-  Child,
-  Button,
-  Checkbox,
-  HasError,
-  AlertError,
-  AlertSuccess,
-  RecommendBooks,
-  MarkdownRender,
-  Blacklist,
-  TocSidebar,
-  Paginate,
+    Card,
+    Child,
+    Button,
+    Checkbox,
+    HasError,
+    AlertError,
+    AlertSuccess,
+    RecommendBooks,
+    MarkdownRender,
+    Blacklist,
+    TocSidebar,
+    Paginate,
+    CategorySelecter,
 ].forEach(Component => {
-  Vue.component(Component.name, Component)
+    Vue.component(Component.name, Component)
 })

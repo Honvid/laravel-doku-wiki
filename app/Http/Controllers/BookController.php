@@ -3,26 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Repositories\BookRepository;
 use Dcat\Admin\Support\Helper;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
+    protected $bookRepository = null;
+
     /**
-     * Display a listing of the resource.
+     * BookController constructor.
      *
-     * @return \Illuminate\Http\Response
+     * @param BookRepository $bookRepository
      */
-    public function index()
+    public function __construct(BookRepository $bookRepository)
     {
-        $books = Book::all();
+        $this->bookRepository = $bookRepository;
+    }
+
+    /**
+     * Book list
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        $books = $this->bookRepository->fetch($request);
+
         return response($books);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
+     *
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -33,7 +50,8 @@ class BookController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Book  $book
+     * @param  \App\Models\Book $book
+     *
      * @return \Illuminate\Http\Response
      */
     public function show(Book $book)
@@ -44,8 +62,9 @@ class BookController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Book  $book
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Models\Book         $book
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Book $book)
@@ -56,7 +75,8 @@ class BookController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Book  $book
+     * @param  \App\Models\Book $book
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(Book $book)
@@ -72,19 +92,22 @@ class BookController extends Controller
     public function recommendBooks()
     {
         $books = Book::all();
+
         return response($books);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @param  \App\Models\Book  $book
+     * @param  \App\Models\Book $book
+     *
      * @return \Illuminate\Http\Response
      */
     public function blacklist(Book $book)
     {
         $pages = $book->pages()->get()->toArray();
         $pages = Helper::buildNestedArray($pages);
+
         return response($pages);
     }
 }

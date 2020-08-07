@@ -19,16 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-Route::group([
-    'namespace'     => 'Web',
-], function (Router $router) {
-    $router->get('/books/{book}/blacklist', 'BookController@blacklist');
-    $router->get('/pages/{page}/comments', 'PageController@comments');
-    //$router->resource('/pages', 'PageController');
-    //$router->resource('/authors', 'AuthorController');
-});
-
 Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', 'Auth\LoginController@logout');
 
@@ -42,6 +32,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('/books', 'BookController');
 
     Route::apiResource('/pages', 'PageController');
+    Route::apiResource('/categories', 'CategoryController');
 });
 
 Route::group(['middleware' => 'guest:api'], function () {
