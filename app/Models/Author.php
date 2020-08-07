@@ -11,6 +11,8 @@ class Author extends Model
     use HasDateTimeFormatter;
     use SoftDeletes;
 
+    protected $hidden = ['created_at', 'updated_at', 'birthday', 'deleted_at'];
+
     public function books()
     {
         return $this->belongsToMany(Book::class, 'book_authors');

@@ -17,9 +17,9 @@
               >
                 <div class="card">
                   <img
-                    src="https://img10.360buyimg.com/n1/jfs/t17938/59/1142276947/38769/2cd5ad43/5abb7e21Ne769a7b3.jpg"
+                    :src="book.cover"
                     class="card-img-top"
-                    alt="..."
+                    :alt="book.name"
                   />
                   <div class="card-body">
                     <h5 class="card-title">{{ book.name }}</h5>
@@ -84,7 +84,6 @@ export default {
   },
   watch: {
     $route(to, from) {
-      console.log("a", to, from);
       this.getBooks();
     }
   },

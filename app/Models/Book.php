@@ -18,6 +18,11 @@ class Book extends Model
 
     protected $guarded = ['id'];
 
+    protected $hidden = [
+        'created_at',
+        'deleted_at',
+    ];
+
     public function pages()
     {
         return $this->hasMany(Page::class);

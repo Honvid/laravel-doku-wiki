@@ -29,20 +29,27 @@ class BookRepository extends EloquentRepository
         $books = Model::with(['authors']);
         if (!empty($author)) {
             $books->whereHas('authors', function (Builder $query) use ($author) {
-                $query->where('author_id', $author);
-
-                return $query->select('author_id', 'name');
+                return $query->where('author_id', $author);
             });
         }
         if (!empty($category)) {
             $books->whereHas('categories', function (Builder $query) use ($category) {
-                if (!empty($category)) {
-                    $query->where('category_id', $category);
-                }
-
-                return $query->select('category_id', 'name');
+                return $query->where('category_id', $category);
             });
         }
-        return $books->paginate(null, ['id', 'name', 'created_at']);
+
+        return $books->paginate(null, ['id', 'name', 'cover', 'created_at']);
+    }
+
+    /**
+     * @param Model $book
+     *
+     * @return array
+     */
+    public function one(Model $book)
+    {
+        $data = $book->load(['authors', 'categories'])->toArray();
+
+        return $data;
     }
 }

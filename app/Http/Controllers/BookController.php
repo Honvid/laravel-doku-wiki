@@ -48,7 +48,7 @@ class BookController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show one book detail
      *
      * @param  \App\Models\Book $book
      *
@@ -56,7 +56,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        return response($book);
+        return response($this->bookRepository->one($book));
     }
 
     /**

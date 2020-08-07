@@ -9,6 +9,8 @@ import Blacklist from './Blacklist'
 import TocSidebar from './TocSidebar'
 import Paginate from './Paginate'
 import CategorySelecter from './CategorySelecter'
+import Tab from './Tab'
+import Tabs from './Tabs'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
 // Components that are registered globaly.
@@ -26,6 +28,8 @@ import { HasError, AlertError, AlertSuccess } from 'vform'
     TocSidebar,
     Paginate,
     CategorySelecter,
+    Tab,
+    Tabs,
 ].forEach(Component => {
     Vue.component(Component.name, Component)
 })

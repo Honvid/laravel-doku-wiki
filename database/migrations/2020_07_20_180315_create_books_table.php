@@ -17,8 +17,14 @@ class CreateBooksTable extends Migration
             $table->increments('id');
             $table->string('name')->index()->default('')->comment('Name');
             $table->string('author')->comment('Author');
+            $table->string('cover')->comment('Cover');
             $table->text('desc')->comment('Description');
             $table->integer('order')->default('0')->comment('Order');
+            $table->integer('page_count')->default('0')->comment('Page Count');
+            $table->integer('edit_count')->default('0')->comment('Edit Count');
+            $table->integer('view_count')->default('0')->comment('View Count');
+            $table->integer('comment_count')->default('0')->comment('Comment Count');
+            $table->integer('last_modify_by')->default('0')->comment('Last Modify');
             $table->timestamps();
             $table->softDeletes();
         });
