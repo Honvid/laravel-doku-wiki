@@ -15,7 +15,9 @@
           <router-link
             :to="{ name: 'libraries.pages-view', params: { id: child.id} }"
             class="text-decoration-none pl-2"
-          >{{ child.title }}</router-link>
+          >
+            <span>{{ child.title }}</span>
+          </router-link>
         </li>
       </ol>
     </li>
@@ -30,27 +32,27 @@ export default {
 
   data() {
     return {
-      blacklists: []
+      blacklists: [],
     };
   },
 
   props: {
     id: {
       type: Number,
-      required: true
-    }
+      required: true,
+    },
   },
 
   mounted() {
     getBookBlacklist(this.id)
-      .then(response => {
+      .then((response) => {
         this.blacklists = response.data;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       })
       .finally(() => {});
-  }
+  },
 };
 </script>
 <style lang="scss">
@@ -72,18 +74,19 @@ export default {
     li {
       padding: 0;
       list-style: none;
+      border-bottom: 1px dashed rgba(0, 0, 0, 0.125);
       a {
         display: inline-block;
         width: 100%;
-        padding-left: 1rem!important;
-        margin-left: 2rem !important;
-        border-bottom: 1px dashed rgba(0,0,0,.125);
-        &:last-child{
-            border: none;
-        }
         &:hover {
           background-color: rgba(0, 0, 0, 0.05);
         }
+        span {
+          padding-left: 2rem !important;
+        }
+      }
+      &:last-child {
+        border: none;
       }
     }
   }

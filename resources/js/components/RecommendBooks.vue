@@ -4,6 +4,7 @@
       <li v-for="book in books" :key="book.id" class="recommend-book-item">
         <router-link
           :to="{ name: 'libraries.books-view', params: {id: book.id} }"
+          :active-class="'active'"
           class="text-decoration-none"
         >
           <font-awesome-icon icon="book" fixed-width />
@@ -24,20 +25,20 @@ export default {
 
   data() {
     return {
-      books: []
+      books: [],
     };
   },
 
   mounted() {
     getRecommendBooks()
-      .then(response => {
+      .then((response) => {
         this.books = response.data;
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
       })
       .finally(() => {});
-  }
+  },
 };
 </script>
 <style lang="scss">

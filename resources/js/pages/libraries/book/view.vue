@@ -105,7 +105,7 @@ export default {
   components: {
     Blacklist,
     MarkdownRender,
-    RecommendBooks
+    RecommendBooks,
   },
   middleware: "auth",
   scrollToTop: true,
@@ -116,36 +116,50 @@ export default {
 
   data() {
     return {
-      book: []
+      book: [],
     };
   },
 
+  props: ["id"],
+
   mounted() {
-    getBook(this.$route.params.id)
-      .then(response => {
-        this.book = response.data;
-      })
-      .catch(error => {
-        console.log(error);
-      })
-      .finally(() => {});
-  }
+    this.getBook();
+  },
+
+  methods: {
+    getBook() {
+      getBook(this.id)
+        .then((response) => {
+          this.book = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {});
+    },
+  },
 };
 </script>
 
 <style lang="scss">
 .book-detail {
-  .card-body {
-    .media-body {
-      p.book-item {
-        margin: 0.2rem 0;
-        span.tag {
-          display: inline-block;
-          width: 70px;
-          margin: 0 0.75rem 0 0;
-          text-align: justify;
-          text-align-last: justify;
+  .card {
+    margin-bottom: 2rem;
+    .card-body {
+      .media-body {
+        p.book-item {
+          margin: 0.2rem 0;
+          span.tag {
+            display: inline-block;
+            width: 70px;
+            margin: 0 0.75rem 0 0;
+            text-align: justify;
+            text-align-last: justify;
+          }
         }
+      }
+      .tab-content {
+        padding-top: 1rem;
       }
     }
   }

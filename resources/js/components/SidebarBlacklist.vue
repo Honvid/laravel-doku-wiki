@@ -1,84 +1,132 @@
 <template>
-    <div class="backlist-sidebar hide-ios">
-        <div class="card">
-            <div class="card-body">
-                <h3>目录</h3>
-                <ul class="backlist">
-                    <li class="chapter-item" v-bind:data-id="item.id"
-                        v-for="item in blacklist"
-                        @mouseover="collapse(item.id, false)"
-                        @mouseout="collapse(item.id, true)"
-                        v-bind:class="{ active: item.id === current || active}">
-                        <a href="/pages/1"><i class="fa fa-caret-right"></i> {{ item.title }}</a>
-                        <ol v-if="item.children">
-                            <li class="page-item"
-                                v-for="child in item.children"
-                                v-bind:data-id="child.id">
-                                <a href="#"><i class="fa fa-file-text"></i> {{ child.title }}</a>
-                            </li>
-                        </ol>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+  <card :title="'目录'">
+    <ul class="backlist-sidebar hide-ios">
+      <li
+        class="chapter-item"
+        :key="item.id"
+        :data-id="item.id"
+        v-for="item in blacklist"
+        @mouseover="collapse(item.id, false)"
+        @mouseout="collapse(item.id, true)"
+        :class="{ active: item.id === current || active}"
+      >
+        <router-link
+          :to="{ name: 'libraries.pages-view', params: { id: item.id} }"
+          :active-class="'active'"
+        >{{ item.title }}</router-link>
+        <ol v-if="item.children">
+          <li v-for="child in item.children" :key="child.id" :data-id="child.id">
+            <router-link
+              :to="{ name: 'libraries.pages-view', params: { id: child.id} }"
+              :active-class="'active'"
+            >{{ child.title }}</router-link>
+          </li>
+        </ol>
+      </li>
+    </ul>
+  </card>
 </template>
 
 <script>
-  import axios from 'axios';
+import { getBookBlacklist } from "~/apis/libraries";
 
-  export default {
-    name: 'blacklist',
-    data() {
-      return {
-        blacklist: [],
-        current: 0,
-        active: false
-      }
+export default {
+  name: "SidebarBlacklist",
+  data() {
+    return {
+      blacklist: [],
+      current: 0,
+      active: false,
+    };
+  },
+  props: {
+    book: {
+      type: Number,
+      required: true,
     },
-    props: {
-      book: {
-        type: Number,
-        required: true
-      },
-      page: {
-        type: Number,
-        required: true
-      }
+    id: {
+      type: Number,
+      required: true,
     },
-    created() {
+  },
+  created() {},
+  methods: {
+    collapse(id, isCollapse) {
+      let items = document.querySelectorAll(".chapter-item");
+      items.forEach((item) => {
+        let currentId = parseInt(item.getAttribute("data-id"));
+        item.classList.toggle(
+          "active",
+          (currentId === this.current && isCollapse) ||
+            (currentId === id && !isCollapse)
+        );
+      });
     },
-    methods: {
-      collapse(id, isCollapse) {
-        let items = document.querySelectorAll('.backlist .chapter-item');
-        items.forEach((item) => {
-          let currentId = parseInt(item.getAttribute('data-id'));
-          item.classList.toggle('active', (currentId === this.current && isCollapse) || (currentId === id))
-        })
-      },
-      redirect(id) {
-        console.log(id);
-      }
-    },
-    mounted() {
-      axios.get('/api/books/' + this.book + '/blacklist')
-        .then((response) => {
-          for (let item of response.data) {
-            if (item.id === this.page) {
-              this.current = item.id;
-              break;
-            }
-            if (item.children) {
-              for (let child of item.children) {
-                if (child.id === this.page) {
-                  this.current = item.id;
-                  break;
-                }
+  },
+  mounted() {
+    getBookBlacklist(this.book)
+      .then((response) => {
+        for (let item of response.data) {
+          if (item.id === this.id) {
+            this.current = item.id;
+            break;
+          }
+          if (item.children) {
+            for (let child of item.children) {
+              if (child.id === this.id) {
+                this.current = item.id;
+                break;
               }
             }
           }
-          this.blacklist = response.data
-        })
+        }
+        this.blacklist = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {});
+  },
+};
+</script>
+<style lang="scss">
+.card {
+  margin-bottom: 1rem;
+  .backlist-sidebar {
+    padding: 0;
+    font-size: 0.9rem !important;
+    list-style: none;
+    li,
+    ol,
+    ol li {
+      padding: 0;
+      list-style: none;
+      a {
+        font-size: 1rem;
+        line-height: 1.8rem;
+        text-decoration: none;
+        &.active {
+          width: 100%;
+          display: block;
+          border-radius: 5px;
+          padding-left: 1.2rem;
+          background-color: rgba(0, 0, 0, 0.05);
+        }
+      }
+    }
+    li {
+      &.active {
+        ol {
+          display: block;
+        }
+      }
+      ol {
+        display: none;
+        a {
+          padding-left: 1.5rem;
+        }
+      }
     }
   }
-</script>
+}
+</style>
