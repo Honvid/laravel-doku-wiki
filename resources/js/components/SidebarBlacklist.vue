@@ -103,13 +103,13 @@ export default {
       list-style: none;
       a {
         font-size: 1rem;
+        padding-left: 0.5rem;
         line-height: 1.8rem;
         text-decoration: none;
         &.active {
           width: 100%;
           display: block;
           border-radius: 5px;
-          padding-left: 1.2rem;
           background-color: rgba(0, 0, 0, 0.05);
         }
       }
@@ -123,7 +123,7 @@ export default {
       ol {
         display: none;
         a {
-          padding-left: 1.5rem;
+          padding-left: 1.2rem;
         }
       }
     }

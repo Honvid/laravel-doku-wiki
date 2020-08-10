@@ -23,7 +23,7 @@ export default {
         this.content,
         {
           speech: {
-            enable: true,
+            enable: false,
           },
           after: () => {
             if (window.innerWidth <= 768) {

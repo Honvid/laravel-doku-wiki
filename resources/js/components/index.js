@@ -10,6 +10,7 @@ import TocSidebar from './TocSidebar'
 import Paginate from './Paginate'
 import CategorySelecter from './CategorySelecter'
 import SidebarBlacklist from './SidebarBlacklist'
+import ScrollTop from './ScrollTop.vue'
 import { HasError, AlertError, AlertSuccess } from 'vform'
 
 // Components that are registered globaly.
@@ -28,6 +29,7 @@ import { HasError, AlertError, AlertSuccess } from 'vform'
     Paginate,
     CategorySelecter,
     SidebarBlacklist,
+    ScrollTop,
 ].forEach(Component => {
     Vue.component(Component.name, Component)
 })
