@@ -6,18 +6,16 @@
         :key="item.id"
         :data-id="item.id"
         v-for="item in blacklist"
-        @mouseover="collapse(item.id, false)"
-        @mouseout="collapse(item.id, true)"
         :class="{ active: item.id === current || active}"
       >
         <router-link
-          :to="{ name: 'libraries.pages-view', params: { id: item.id} }"
+          :to="{ name: 'libraries.pages.view', params: { id: item.id} }"
           :active-class="'active'"
         >{{ item.title }}</router-link>
         <ol v-if="item.children">
           <li v-for="child in item.children" :key="child.id" :data-id="child.id">
             <router-link
-              :to="{ name: 'libraries.pages-view', params: { id: child.id} }"
+              :to="{ name: 'libraries.pages.view', params: { id: child.id} }"
               :active-class="'active'"
             >{{ child.title }}</router-link>
           </li>
@@ -49,7 +47,6 @@ export default {
       required: true,
     },
   },
-  created() {},
   methods: {
     collapse(id, isCollapse) {
       let items = document.querySelectorAll(".chapter-item");
@@ -117,6 +114,11 @@ export default {
     li {
       &.active {
         ol {
+          display: block;
+        }
+      }
+      &:hover{
+          ol {
           display: block;
         }
       }

@@ -16,7 +16,6 @@ class CreatePagesTable extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title')->default('')->comment('Page Title');
-            $table->string('author')->nullable()->default('')->comment('Author');
             $table->integer('book_id')->default('0')->comment('Book');
             $table->integer('parent_id')->default('0')->comment('Parent');
             $table->text('content')->comment('Page Content');

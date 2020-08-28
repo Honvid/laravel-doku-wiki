@@ -16,7 +16,6 @@ class CreateBooksTable extends Migration
         Schema::create('books', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->index()->default('')->comment('Name');
-            $table->string('author')->comment('Author');
             $table->string('cover')->comment('Cover');
             $table->text('desc')->comment('Description');
             $table->integer('order')->default('0')->comment('Order');

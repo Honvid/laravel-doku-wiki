@@ -13,7 +13,7 @@
         <ul class="navbar-nav">
           <locale-dropdown />
           <li class="nav-item">
-            <router-link :to="{ name: 'libraries.books-index' }" class="nav-link" active-class="active">
+            <router-link :to="{ name: 'libraries.books.index' }" class="nav-link" active-class="active">
               {{ $t('books') }}
             </router-link>
           </li>

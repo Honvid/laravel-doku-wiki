@@ -19,8 +19,22 @@ class Page extends Model
 
     protected $guarded = ['id'];
 
+    /**
+     * this page belongs to book
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function book()
     {
         return $this->belongsTo(Book::class);
+    }
+
+    /**
+     * Page's authors
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function authors()
+    {
+        return $this->belongsToMany(Author::class, 'page_authors');
     }
 }

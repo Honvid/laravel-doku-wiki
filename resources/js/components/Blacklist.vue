@@ -3,7 +3,7 @@
     <li v-for="blacklist in blacklists" :key="blacklist.id" class="list-group-item">
       <router-link
         class="text-decoration-none"
-        :to="{ name: 'libraries.pages-view', params: { id: blacklist.id} }"
+        :to="{ name: 'libraries.pages.view', params: { id: blacklist.id} }"
       >{{ blacklist.title }}</router-link>
       <ol v-if="blacklist.children">
         <li
@@ -13,7 +13,7 @@
           :key="child.id"
         >
           <router-link
-            :to="{ name: 'libraries.pages-view', params: { id: child.id} }"
+            :to="{ name: 'libraries.pages.view', params: { id: child.id} }"
             class="text-decoration-none pl-2"
           >
             <span>{{ child.title }}</span>

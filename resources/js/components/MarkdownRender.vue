@@ -22,8 +22,9 @@ export default {
         document.querySelector("#markdown-render" + id),
         this.content,
         {
+          anchor: 2,
           speech: {
-            enable: false,
+            enable: this.toc,
           },
           after: () => {
             if (window.innerWidth <= 768) {
@@ -36,6 +37,9 @@ export default {
                 headingSelector: "h1, h2, h3",
                 hasInnerContainers: false,
               });
+              if (document.querySelector(".toc").innerHTML === "") {
+                document.querySelector(".toc-container").remove();
+              }
             }
           },
         }
@@ -47,3 +51,6 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+@import "~vditor/src/assets/scss/index";
+</style>

@@ -12,15 +12,11 @@
           <div class="row">
             <div v-for="book in books" :key="book.id" class="col-sm-6 col-md-3">
               <router-link
-                :to="{ name: 'libraries.books-view', params: {id: book.id} }"
+                :to="{ name: 'libraries.books.view', params: {id: book.id} }"
                 class="text-decoration-none"
               >
                 <div class="card">
-                  <img
-                    :src="book.cover"
-                    class="card-img-top"
-                    :alt="book.name"
-                  />
+                  <img :src="book.cover" class="card-img-top" :alt="book.name" />
                   <div class="card-body">
                     <h5 class="card-title">{{ book.name }}</h5>
                     <p v-if="book.authors.length > 1">
@@ -75,41 +71,44 @@ export default {
       books: [],
       total: 0,
       page: this.$route.query.page | 1,
-      loading: true
+      loading: true,
     };
   },
 
   mounted() {
     this.getBooks();
   },
+
   watch: {
     $route(to, from) {
-      this.getBooks();
-    }
+      if (to.hash === "") {
+        this.getBooks();
+      }
+    },
   },
   methods: {
     clickCallback(pageNum) {
       this.page = pageNum;
       this.$router.push({
-        query: merge(this.$route.query, { page: pageNum })
+        query: merge(this.$route.query, { page: pageNum }),
       });
     },
     getBooks() {
       this.loading = false;
       getBooks(this.$route.query)
-        .then(response => {
+        .then((response) => {
           this.books = response.data.data;
           this.total = response.data.total;
           this.page = response.data.current_page;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         })
         .finally(() => {
           this.loading = false;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

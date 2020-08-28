@@ -3,10 +3,10 @@
 namespace App\Admin\Controllers;
 
 use App\Repositories\CommentRepository;
+use Dcat\Admin\Controllers\AdminController;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
-use Dcat\Admin\Controllers\AdminController;
 
 class CommentController extends AdminController
 {
@@ -28,10 +28,10 @@ class CommentController extends AdminController
             $grid->comment_id;
             $grid->created_at;
             $grid->updated_at->sortable();
-        
+
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
-        
+
             });
         });
     }
@@ -75,9 +75,6 @@ class CommentController extends AdminController
             $form->text('object_id');
             $form->text('object_type');
             $form->text('comment_id');
-        
-            $form->display('created_at');
-            $form->display('updated_at');
         });
     }
 }

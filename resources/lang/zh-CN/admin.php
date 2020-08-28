@@ -218,9 +218,10 @@ return [
         'scaffold'      => '代码生成器',
         'icons'         => '图标',
         'library'       => '图书馆',
-        'books'          => '图书',
-        'chapters'       => '章节',
+        'books'         => '图书',
+        'chapters'      => '章节',
         'pages'         => '内容',
-        'authors'        => '作者',
+        'authors'       => '作者',
+        'categories'    => '分类',
     ],
 ];

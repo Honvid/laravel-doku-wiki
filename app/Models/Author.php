@@ -13,6 +13,10 @@ class Author extends Model
 
     protected $hidden = ['created_at', 'updated_at', 'birthday', 'deleted_at'];
 
+    /**
+     * Authors books
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function books()
     {
         return $this->belongsToMany(Book::class, 'book_authors');

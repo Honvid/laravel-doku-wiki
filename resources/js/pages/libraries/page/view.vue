@@ -9,7 +9,15 @@
       <transition name="fade" mode="out-in">
         <div class="card">
           <div class="card-header">
-            <h5>{{ page.title }}</h5>
+            <h5>
+              {{ page.title }}
+              <router-link
+                :to="{name:'libraries.pages.edit', params: {id: page.id}}"
+                class="float-right"
+              >
+                <font-awesome-icon icon="edit" fixed-width />
+              </router-link>
+            </h5>
             <small>
               <router-link :to="'/users'" class="user-name">{{page.author}}</router-link>
               <span>发布于 {{ page.created_at }}</span>
@@ -41,6 +49,7 @@ import ScrollTop from "~/components/ScrollTop.vue";
 export default {
   components: {
     TocSidebar,
+    ScrollTop,
     MarkdownRender,
     SidebarBlacklist,
   },
@@ -70,13 +79,21 @@ export default {
       getPage(this.id)
         .then((response) => {
           this.page = response.data;
+          this.$nextTick(() => {
+            this.loading = true;
+          });
         })
         .catch((error) => {
           console.log(error);
         })
-        .finally(() => {
-          this.loading = true;
-        });
+        .finally(() => {});
+    },
+  },
+  watch: {
+    $route(to, from) {
+      if (to.hash === "") {
+        this.getPage();
+      }
     },
   },
 };

@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-md-3">
-      <recommend-books></recommend-books>
+      <recommend-books v-if="loading"></recommend-books>
     </div>
 
     <div class="col-md-9 book-detail">
@@ -14,7 +14,7 @@
               <p class="book-item">
                 <span class="tag">作者</span>
                 <router-link
-                  :to="{ name: 'libraries.books-index', params: {author: author.id} }"
+                  :to="{ name: 'libraries.books.index', params: {author: author.id} }"
                   class="mr-2"
                   v-for="author in book.authors"
                   :key="author.id"
@@ -24,7 +24,7 @@
               <p class="book-item">
                 <span class="tag">分类</span>
                 <router-link
-                  :to="{ name: 'libraries.books-index', params: {category_id: category.id} }"
+                  :to="{ name: 'libraries.books.index', params: {category_id: category.id} }"
                   class="btn btn-primary btn-sm mr-2"
                   v-for="category in book.categories"
                   :key="category.id"
@@ -77,7 +77,8 @@
               role="tabpanel"
               aria-labelledby="book-info-tab"
             >
-              <markdown-render :content="book.desc" :id="book.id" v-if="book.desc"></markdown-render>
+              <markdown-render :content="book.desc" :id="book.id" v-if="loading && book.desc"></markdown-render>
+              <div v-else>暂无介绍</div>
             </div>
             <div
               class="tab-pane fade"
@@ -85,7 +86,8 @@
               role="tabpanel"
               aria-labelledby="book-blacklist-tab"
             >
-              <blacklist :id="book.id" v-if="book.id"></blacklist>
+              <blacklist :id="book.id" v-if="loading"></blacklist>
+              <div v-else>暂无介绍</div>
             </div>
           </div>
         </card>
@@ -116,6 +118,7 @@ export default {
 
   data() {
     return {
+      loading: false,
       book: [],
     };
   },
@@ -131,11 +134,22 @@ export default {
       getBook(this.id)
         .then((response) => {
           this.book = response.data;
+          this.$nextTick(() => {
+            this.loading = true;
+          });
         })
         .catch((error) => {
           console.log(error);
         })
         .finally(() => {});
+    },
+  },
+
+  watch: {
+    $route(to, from) {
+      if (to.hash === "") {
+        this.getBook();
+      }
     },
   },
 };

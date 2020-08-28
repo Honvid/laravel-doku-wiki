@@ -1,13 +1,14 @@
-<?php 
+<?php
 return [
-    'labels' => [
+    'labels'  => [
         'Book' => 'Book',
     ],
-    'fields' => [
-        'name' => 'Name',
-        'author' => 'Author',
-        'desc' => 'Description',
-        'order' => 'Order',
+    'fields'  => [
+        'name'       => 'Name',
+        'authors'    => 'Author',
+        'categories' => 'Category',
+        'desc'       => 'Description',
+        'order'      => 'Order',
     ],
     'options' => [
     ],

@@ -4,6 +4,7 @@ namespace App\Admin\Controllers;
 
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\Category;
 use Dcat\Admin\Controllers\AdminController;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
@@ -18,17 +19,27 @@ class BookController extends AdminController
      */
     protected function grid()
     {
-        return Grid::make(new Book(), function (Grid $grid) {
+        return Grid::make((new Book())->with(['authors', 'categories']), function (Grid $grid) {
             $grid->id->sortable();
             $grid->name;
-            $grid->author->display(function ($author) {
-                $authors = Author::find($author)->pluck('name', 'id');
+            $grid->authors->display(function ($authors) {
                 if (empty($authors)) {
+                    return '佚名';
+                }
+                $result = [];
+                foreach ($authors as $author) {
+                    $result[] = '<a href="/admin/authors/' . $author['id'] . '">' . $author['name'] . '</a>';
+                }
+
+                return join(', ', $result);
+            });
+            $grid->categories->display(function ($categories) {
+                if (empty($categories)) {
                     return '';
                 }
                 $result = [];
-                foreach ($authors->toArray() as $id => $name) {
-                    $result[] = '<a href="/admin/authors/' . $id . '">' . $name . '</a>';
+                foreach ($categories as $category) {
+                    $result[] = '<a href="/admin/categories/' . $category['id'] . '">' . $category['name'] . '</a>';
                 }
 
                 return join(', ', $result);
@@ -39,7 +50,6 @@ class BookController extends AdminController
 
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
-
             });
         });
     }
@@ -53,13 +63,15 @@ class BookController extends AdminController
      */
     protected function detail($id)
     {
-        return Show::make($id, new Book(), function (Show $show) {
+        return Show::make($id, Book::with(['authors', 'categories']), function (Show $show) {
             $show->id;
             $show->name;
-            $show->author->as(function ($ids) {
-                return !empty($ids) ? join(',', Author::find($ids)->pluck('name')->toArray()) : "";
+            $show->authors->as(function ($authors) {
+                return !empty($authors) ? join(', ', array_column($authors, 'name')) : '佚名';
             });
-            $show->desc;
+            $show->categories->as(function ($categories) {
+                return !empty($categories) ? join(', ', array_column($categories, 'name')) : '';
+            });
             $show->order;
             $show->created_at;
             $show->updated_at;
@@ -73,16 +85,29 @@ class BookController extends AdminController
      */
     protected function form()
     {
-        return Form::make(new Book(), function (Form $form) {
+        return Form::make(Book::with(['authors', 'categories']), function (Form $form) {
             $form->display('id');
             $form->text('name')->required();
-            $form->multipleSelect('author')
-                ->options(Author::all()->pluck('name', 'id'));
+            $form->multipleSelect('authors')
+                ->options(Author::all()->pluck('name', 'id'))
+                ->customFormat(function ($v) {
+                    if (!$v) {
+                        return [];
+                    }
+
+                    return array_column($v, 'id');
+                });
+            $form->multipleSelect('categories')
+                ->options(Category::all()->pluck('name', 'id'))
+                ->customFormat(function ($v) {
+                    if (!$v) {
+                        return [];
+                    }
+
+                    return array_column($v, 'id');
+                });
             $form->markdown('desc');
             $form->number('order');
-
-            $form->display('created_at');
-            $form->display('updated_at');
         });
     }
 }

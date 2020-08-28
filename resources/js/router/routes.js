@@ -22,11 +22,11 @@ export default [
             { path: 'password', name: 'settings.password', component: page('settings/password.vue') }
         ]
     },
-    { path: '/books', name: 'libraries.books-index', component: page('libraries/book/index.vue') },
-    { path: '/books/:id', name: 'libraries.books-view', component: page('libraries/book/view.vue'), props: true },
+    { path: '/books', name: 'libraries.books.index', component: page('libraries/book/index.vue') },
+    { path: '/books/:id', name: 'libraries.books.view', component: page('libraries/book/view.vue'), props: true },
 
-    // { path: '/pages', name: 'libraries.pages-index', component: page('libraries/page/index.vue') },
-    { path: '/pages/:id', name: 'libraries.pages-view', component: page('libraries/page/view.vue'), props: true },
+    { path: '/pages/:id', name: 'libraries.pages.view', component: page('libraries/page/view.vue'), props: true },
+    { path: '/pages/:id/edit', name: 'libraries.pages.edit', component: page('libraries/page/edit.vue'), props: true },
 
     { path: '*', component: page('errors/404.vue') }
 ]

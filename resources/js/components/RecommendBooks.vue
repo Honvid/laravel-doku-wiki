@@ -3,7 +3,7 @@
     <ul class="recommend-book-list">
       <li v-for="book in books" :key="book.id" class="recommend-book-item">
         <router-link
-          :to="{ name: 'libraries.books-view', params: {id: book.id} }"
+          :to="{ name: 'libraries.books.view', params: {id: book.id} }"
           :active-class="'active'"
           class="text-decoration-none"
         >

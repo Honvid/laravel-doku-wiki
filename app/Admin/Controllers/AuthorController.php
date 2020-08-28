@@ -3,10 +3,10 @@
 namespace App\Admin\Controllers;
 
 use App\Repositories\AuthorRepository;
+use Dcat\Admin\Controllers\AdminController;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
-use Dcat\Admin\Controllers\AdminController;
 
 class AuthorController extends AdminController
 {
@@ -23,10 +23,10 @@ class AuthorController extends AdminController
             $grid->birthday;
             $grid->created_at;
             $grid->updated_at->sortable();
-        
+
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
-        
+
             });
         });
     }
@@ -60,9 +60,6 @@ class AuthorController extends AdminController
             $form->display('id');
             $form->text('name')->required();
             $form->text('birthday');
-        
-            $form->display('created_at');
-            $form->display('updated_at');
         });
     }
 }

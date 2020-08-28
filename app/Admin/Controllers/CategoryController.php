@@ -2,11 +2,12 @@
 
 namespace App\Admin\Controllers;
 
-use App\Repositories\Category;
+use App\Models\Category;
+use App\Repositories\CategoryRepository;
+use Dcat\Admin\Controllers\AdminController;
 use Dcat\Admin\Form;
 use Dcat\Admin\Grid;
 use Dcat\Admin\Show;
-use Dcat\Admin\Controllers\AdminController;
 
 class CategoryController extends AdminController
 {
@@ -17,17 +18,15 @@ class CategoryController extends AdminController
      */
     protected function grid()
     {
-        return Grid::make(new Category(), function (Grid $grid) {
+        return Grid::make(new CategoryRepository(), function (Grid $grid) {
             $grid->id->sortable();
-            $grid->name;
-            $grid->parent_id;
+            $grid->name->tree(); // 开启树状表格功能
             $grid->level;
             $grid->created_at;
             $grid->updated_at->sortable();
-        
+
             $grid->filter(function (Grid\Filter $filter) {
                 $filter->equal('id');
-        
             });
         });
     }
@@ -41,7 +40,7 @@ class CategoryController extends AdminController
      */
     protected function detail($id)
     {
-        return Show::make($id, new Category(), function (Show $show) {
+        return Show::make($id, new CategoryRepository(), function (Show $show) {
             $show->id;
             $show->name;
             $show->parent_id;
@@ -58,14 +57,11 @@ class CategoryController extends AdminController
      */
     protected function form()
     {
-        return Form::make(new Category(), function (Form $form) {
+        return Form::make(new CategoryRepository(), function (Form $form) {
             $form->display('id');
             $form->text('name');
-            $form->text('parent_id');
+            $form->select('parent_id')->options(Category::all()->pluck('name', 'id'));
             $form->text('level');
-        
-            $form->display('created_at');
-            $form->display('updated_at');
         });
     }
 }

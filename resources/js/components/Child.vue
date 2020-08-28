@@ -1,7 +1,7 @@
 <template>
   <transition name="page" mode="out-in">
     <slot>
-      <router-view :key="$route.fullPath" />
+      <router-view />
     </slot>
   </transition>
 </template>
