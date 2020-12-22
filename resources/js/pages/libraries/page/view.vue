@@ -20,14 +20,18 @@
             </h5>
             <small>
               <router-link :to="'/users'" class="user-name">{{page.author}}</router-link>
-              <span>发布于 {{ page.created_at }}</span>
-              <span>· 编辑于 {{ page.updated_at }}</span>
-              <span>
+              <span v-if="page.authors"><e v-for="author in page.authors" v-bind:key="author.id">{{author.name}}</e></span>
+              <span v-if="page.editor">
                 · 最后由
-                <router-link :to="'/users'">{{page.author}}</router-link>
+                <router-link :to="'/users/' + page.editor.id">{{page.editor.name}}</router-link>
                 回复于 {{ page.updated_at }}
               </span>
-              <span>· 2 次阅读</span>
+              <span v-if="page.editor">
+                · 最后由
+                <router-link :to="'/users/' + page.editor.id">{{page.editor.name}}</router-link>
+                回复于 {{ page.updated_at }}
+              </span>
+              <span>· {{ page.view_count }} 次阅读</span>
             </small>
           </div>
           <div class="card-body page-content">

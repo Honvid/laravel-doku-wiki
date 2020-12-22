@@ -4,14 +4,11 @@ namespace App\Models;
 
 use App\Models\Traits\ClassNameTrait;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Book extends Model
+class Book extends Base
 {
-    use HasDateTimeFormatter;
-    use SoftDeletes;
-    use ClassNameTrait;
+    use HasDateTimeFormatter, ClassNameTrait, SoftDeletes;
 
     protected $perPage = 1;
 
@@ -25,7 +22,7 @@ class Book extends Model
     /**
      * Book's pages
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function pages()
     {
@@ -35,7 +32,7 @@ class Book extends Model
     /**
      * Book's authors
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function authors()
     {
@@ -45,7 +42,7 @@ class Book extends Model
     /**
      * Book's categories
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function categories()
     {

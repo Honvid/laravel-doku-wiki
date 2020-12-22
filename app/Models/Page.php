@@ -3,17 +3,14 @@
 namespace App\Models;
 
 use App\Models\Traits\ClassNameTrait;
+use App\Models\Traits\UpdateBy;
 use Dcat\Admin\Traits\HasDateTimeFormatter;
 use Dcat\Admin\Traits\ModelTree;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Page extends Model
+class Page extends Base
 {
-    use HasDateTimeFormatter;
-    use ModelTree;
-    use SoftDeletes;
-    use ClassNameTrait;
+    use HasDateTimeFormatter, ModelTree, SoftDeletes, ClassNameTrait, UpdateBy;
 
     protected $orderColumn = 'order';
 
@@ -36,5 +33,15 @@ class Page extends Model
     public function authors()
     {
         return $this->belongsToMany(Author::class, 'page_authors');
+    }
+
+    /**
+     * Page's authors
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function editor()
+    {
+        return $this->belongsTo(User::class, 'last_modify_by');
     }
 }

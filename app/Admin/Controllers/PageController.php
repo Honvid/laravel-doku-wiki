@@ -108,6 +108,11 @@ class PageController extends AdminController
                     $request->deleteInput('parent_id');
                 }
             });
+            $form->saved(function (Form $form) {
+                if ($form->isCreating()) {
+                    (new Book())->increments(request('book_id'), 'page_count');
+                }
+            });
         });
     }
 }

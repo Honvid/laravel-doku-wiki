@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Page;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class PageController extends Controller
 {
@@ -39,10 +40,11 @@ class PageController extends Controller
      */
     public function show(Page $page)
     {
+        $this->viewIncrement($page);
         $comments = Comment::query()->where('object_id', $page->id)
             ->where('object_type', $page->getClassName())->get();
 
-        return response($page->toArray());
+        return response($page->load(['authors', 'editor', 'book'])->toArray());
     }
 
     /**
@@ -59,7 +61,10 @@ class PageController extends Controller
             'title'   => 'required',
             'content' => 'required',
         ]);
+
         $result = $page->update($request->all());
+
+        $page->increments($page, 'edit_count');
 
         return response($result);
     }
